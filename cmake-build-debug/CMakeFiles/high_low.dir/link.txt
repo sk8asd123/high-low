@@ -1,0 +1,1 @@
+/usr/bin/cc  -Wall -Werror -Wstrict-prototypes -ansi -pedantic -fno-math-errno -g  -Wl,--enable-auto-import CMakeFiles/high_low.dir/main.c.o  -o high_low.exe -Wl,--out-implib,libhigh_low.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
