@@ -4,7 +4,7 @@
 #include <time.h>
 
 #define NUM_PLAYERS 2 /* Number of Players in the game */
-#define PASS "PASS" /* A player may decline to guess */
+#define PASS "PASS\n" /* A player may decline to guess */
 #define ANSWER_MAX 20 /* Max number that the answer could be */
 #define ALLOWED_PASSES 3 /* Max allowed passes that a user can use during the game */
 
@@ -69,7 +69,7 @@ int main(int argc, char* argv[]) {
     for (i = 0; i < NUM_PLAYERS; i++) {
         memset(move_name, 0, sizeof (move_name));
         enum_to_string (p_data[i].last_move, move_name, sizeof(move_name));
-        printf("Player: %d | Number of pass in the game: %d | The last move made: %s\n", i+1,
+        printf("Player: %d | Number of passes in the game: %d | The last move made: %s\n", i+1,
                 p_data[i].num_passes, move_name);
     }
 
@@ -124,11 +124,11 @@ void get_player_number(int num) {
     char *response_compare;
 
     puts("Enter your player number.");
-    gets(response);
+    fgets(response, sizeof(response), stdin);
 
     while (strtol(response, &response_compare, 10) !=  num) {
         puts("Please wait your turn.");
-        gets(response);
+        fgets(response, sizeof(response), stdin);
     }
 }
 
@@ -152,22 +152,21 @@ long get_player_action(struct player_data* ptr, int answer) {
     char *number_response;
     long return_guess = -1;
 
-    printf("Enter your guess or type %s.", PASS);
-    gets(response);
+    printf("Enter your guess or type %s", PASS);
+    fgets(response, sizeof(response), stdin);
 
     if (strcmp (response, PASS) == 0) {
         if (ptr->num_passes == 3) {
-            printf("You have exceeded the number of allowed passes, %d.", ALLOWED_PASSES);
+            printf("You have exceeded the number of allowed passes, %d", ALLOWED_PASSES);
             puts("Please enter an integer guess.");
-            return_guess = strtol(gets(response), &number_response, 10);
+            return_guess = strtol(fgets(response, sizeof(response), stdin), &number_response, 10);
             printf("your guess %ld\n", return_guess);
             evaluate_guess (return_guess, answer);
             ptr->last_move = guessed;
         }
         else if (ptr->last_move == passed) {
             printf("You cannot pass twice in a row. Please enter an integer guess.\n");
-            return_guess = strtol(gets(response), &number_response, 10);
-            printf("your guess %ld\n", return_guess);
+            return_guess = strtol(fgets(response, sizeof(response), stdin), &number_response, 10);
             evaluate_guess (return_guess, answer);
             ptr->last_move = guessed;
         }
