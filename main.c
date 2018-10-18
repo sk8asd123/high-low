@@ -44,7 +44,7 @@ int main(int argc, char* argv[]) {
     int i;
     int player_number_in_play = 0; /* Valid player numbers are greater than 0 */
     int offset; /*This number is 0 or greater, depending on which player is
- * chose to go first */
+ * chosen to go first */
     int answer = 0;  /* Valid answer numbers are greater than 0 */
 
     struct player_data p_data[NUM_PLAYERS]; /* array of structures */
